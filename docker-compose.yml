@@ -1,0 +1,22 @@
+version: "2"
+services:
+  domoticz:
+    image: klippo/domoticz
+    hostname: domoticz
+    container_name: domoticz
+    network_mode: "host"
+    volumes: /opt/domoticz:/config
+    devices:
+    - "/dev/ttyACM0:/dev/ttyACM0"
+  homebridge:
+    image: klippo/homebridge
+    hostname: homebridge
+    container_name: homebridge
+    command: "homebridge"
+    network_mode: "host"
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /opt/homebridge:/root/.homebridge
+      - /var/run/dbus:/var/run/dbus
+    restart: always
